@@ -13,3 +13,4 @@ if(args.basket.totalPrice > 1000){
     result.errors.push("risk!");
     result.hasError = true;
 }
+ 

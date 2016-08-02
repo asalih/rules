@@ -1,16 +1,16 @@
 if(args.basket.totalPrice < 0.1){
-    result.errors.push("price cannot be zero or negative!");
-    result.hasError = true;
+    result.addError("price", "price cannot be zero or negative!");
 }
 
 
 if(args.customer.customerEmail == "xyz@abc.com" || args.customer.customerEmail == "xyza@abc.com"){
-    result.errors.push("unexpected email!")
-    result.hasError = true;
+    result.addError("email", "unexpected email!");
 }
 
 if(args.basket.totalPrice > 1000){
-    result.errors.push("risk!");
-    result.hasError = true;
+    result.addError("payment", "risk!");
+}
+else if(args.basket.totalPrice > 500){
+    result.addWarning("payment", "risky!");
 }
  

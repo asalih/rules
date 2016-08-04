@@ -27,7 +27,8 @@ function Result(){
     this.setStart = function () {this.start = Date.now()},
     this.end=0,
     this.setEnd = function () {this.end = Date.now(); this.elapsed = this.end - this.start},
-    this.elapsed =0;
+    this.elapsed =0,
+    this.rule = {};
     
     
 }
@@ -40,7 +41,7 @@ module.exports = {
         }
         return true;
     },
-    reval: function (file, args, which) {
+    evaluate: function (file, args, which) {
         var result = new Result();
 
         if(!this.isTrustable(file)){

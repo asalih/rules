@@ -13,4 +13,4 @@ if(args.basket.totalPrice > 1000){
 else if(args.basket.totalPrice > 500){
     result.addWarning("payment", "risky!");
 }
- 
+

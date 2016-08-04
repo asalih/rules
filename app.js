@@ -1,6 +1,5 @@
 var fs = require("fs");
 
-var async = require("async");
 var express = require("express");
 var bParser = require("body-parser");
 

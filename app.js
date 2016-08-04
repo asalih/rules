@@ -1,6 +1,7 @@
+var fs = require("fs");
 var express = require("express");
 var bParser = require("body-parser");
-var fs = require("fs");
+
 var restrict = require("./restrict");
 
 var app = express();
@@ -22,7 +23,7 @@ app.get("/rules", function (req, res) {
 app.post("/exec/:which", function (req, res) {
     var file = fs.readFileSync(rulesPath + "\\"+ req.params.which, 'utf8');
     
-    var result = restrict.reval(file, req.body)
+    var result = restrict.reval(file, req.body, req.params.which)
     res.send(result);
 });
 

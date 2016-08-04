@@ -21,7 +21,14 @@ function Result(){
     },
     this.hasSuccesses = function () {
         return this.success.length > 0;
-    }
+    },
+    this.sys=[],
+    this.start=0,
+    this.setStart = function () {this.start = Date.now()},
+    this.end=0,
+    this.setEnd = function () {this.end = Date.now(); this.elapsed = this.end - this.start},
+    this.elapsed =0;
+    
     
 }
 
@@ -29,15 +36,29 @@ module.exports = {
     isTrustable: function (f) {
         var r = new RegExp(/require(\(.*\)|(.*?))/gi);
         if(r.test(f)){
-            throw new Error("'require' not allowed!");
+            return false;
         }
+        return true;
     },
-    reval: function (file, args) {
+    reval: function (file, args, which) {
         var result = new Result();
 
-        this.isTrustable(file);
+        if(!this.isTrustable(file)){
+            result.sys.push("'require' not allowed directly!");
+            return result;
+        }
         
-        eval(file);
+        result.setStart();
+        
+        try{
+            var fnc = new Function(["args", "result"], file);
+            fnc(args, result);
+        }
+        catch(e){
+            result.sys.push(e.message);
+        }
+        result.setEnd();        
+
         return result;
     }
 } 

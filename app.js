@@ -65,6 +65,22 @@ app.get("/rule-body", function (req, res) {
 
 });
 
+app.get("/get-row", function (req, res) {
+    db.rules.findOne({ name: req.query.name }, function (err, doc) {
+        if (doc == null) {
+            res.send("{status: 404}");
+        }
+        else {
+
+
+
+            res.render("tablerow", { fl: doc });
+
+        }
+    });
+
+});
+
 var rulesPath = __dirname + '\\rules';
 app.post("/add", function (req, res) {
     db.rules.findOne({ name: req.body.name }, function (err, doc) {
@@ -72,10 +88,10 @@ app.post("/add", function (req, res) {
             fs.writeFileSync(rulesPath + "\\" + req.body.name + ".js", req.body.body);
 
             db.rules.insert({ name: req.body.name, ctime: Date.now(), utime: Date.now(), state: true });
-            res.send("rule added!");
+            res.send({ success: true, msg: "rule added!" });
         }
         else {
-            res.send("allready has rule with name " + req.body.name);
+            res.send({ success: false, msg: "allready has rule with name " + req.body.name });
         }
     });
 });
@@ -84,23 +100,25 @@ app.post("/add", function (req, res) {
 app.post("/update", function (req, res) {
     db.rules.findOne({ name: req.body.name }, function (err, doc) {
         if (doc == null) {
-            res.send("can not find the rule with name " + req.body.name);
+            res.send({ success: false, msg: "can not find the rule with name " + req.body.name });
         }
         else {
             fs.writeFileSync(rulesPath + "\\" + req.body.name + ".js", req.body.body);
             db.rules.update(doc, { $set: { utime: Date.now() } });
-            res.send("rule updated!");
+            res.send({ success: true, msg: "rule updated!" });
         }
     });
 });
 
 app.post("/delete", function (req, res) {
     db.rules.remove({ name: req.body.name }, function (err, num) {
+        
         if (num > 0) {
-            res.send("rule deleted!")
+             fs.renameSync(rulesPath + "\\" + req.body.name + ".js", rulesPath + "\\" + req.body.name + "_del.bak");
+            res.send({success:true, msg: "rule deleted!"})
         }
         else {
-            res.send("can not find the rule with name " + req.body.name);
+            res.send({success:true, msg: "can not find the rule with name " + req.body.name});
         }
     });
 });

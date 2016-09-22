@@ -52,7 +52,7 @@ module.exports = {
         result.setStart();
         
         try{
-            var fnc = new Function(["args", "result"], file.replace(/\\n/gi, ""));
+            var fnc = new Function(["args", "result"], file);
             fnc(args, result);
         }
         catch(e){

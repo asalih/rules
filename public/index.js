@@ -16,7 +16,8 @@ $(document).ready(function () {
                 autoCloseBrackets: true,
                 mode: "text/javascript",
                 lineWrapping: true,
-                lineNumbers: true
+                lineNumbers: true,
+                lineSeparator: "\r"
             });
         }
     });
@@ -101,7 +102,7 @@ function callDelete(name, item) {
             async: true,
             i: item,
             success: function (params) {
-                if (params === true) {
+                if (params.success === true) {
                     $(this.i).parents("tr").remove();
                 }
                 else {
@@ -126,7 +127,7 @@ function callSave(name, body, item, adding) {
             async: true,
             props: { i: item, adding: adding, name: name },
             success: function (params) {
-                if (params === true) {
+                if (params.success === true) {
                     $(this.props.i).parents("tr").hide();
                     if (this.props.adding) {
                         getRow(name);
@@ -145,7 +146,7 @@ function callSave(name, body, item, adding) {
 
 function getRow(name) {
     $.ajax({
-        url: "/getRow?name=" + namename,
+        url: "/get-row?name=" + name,
         type: "GET",
         success: function (params) {
             var rows = $(params).appendTo($("#rules>tbody"));

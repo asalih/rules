@@ -1,2 +1,3 @@
-{"name":"second-rule","ctime":1470310652574,"utime":1470311057304,"_id":"F2lhCMZbYbasBkHc"}
-{"name":"first-rule","ctime":1470310652574,"utime":1470310652574,"_id":"l4XQwWuPPMkXvH8d"}
+{"name":"second-rule","ctime":1470310652574,"utime":1474547019441,"state":true,"_id":"F2lhCMZbYbasBkHc"}
+{"name":"test","ctime":1474547069288,"utime":1474547756270,"state":true,"_id":"i5dlylU96h4T9qfc"}
+{"name":"first-rule","ctime":1470310652574,"utime":1470310652574,"state":true,"_id":"l4XQwWuPPMkXvH8d"}

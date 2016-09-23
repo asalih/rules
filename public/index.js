@@ -1,4 +1,5 @@
 var editors = [], addEditor;
+var interval_id;
 $(document).ready(function () {
 
     $("#rules>tbody>tr.wRows").each(function () {
@@ -36,6 +37,32 @@ $(document).ready(function () {
         $(".addRow").hide();
         $(".headerRow").show();
     });
+
+
+    stats([{ which: "active", target: "#activeRules" }, { which: "passive", target: "#passiveRules" }, { which: "times", target: "#timesExecuted" }]);
+    $(window).focus(function () {
+        if (!interval_id)
+            interval_id = setInterval(function () {
+                stats([{ which: "active", target: "#activeRules" }, { which: "passive", target: "#passiveRules" }, { which: "times", target: "#timesExecuted" }]);
+            }, 1000);
+    });
+
+    $(window).blur(function () {
+        clearInterval(interval_id);
+        interval_id = 0;
+    });
+
+    $('.modal-link').click(function (e) {
+        var modal = $('#modal'), modalBody = $('#modal .modal-body');
+
+        modal
+            .on('show.bs.modal', function () {
+                modalBody.load(e.currentTarget.href)
+            })
+            .modal();
+        e.preventDefault();
+    });
+
 
 });
 
@@ -212,4 +239,26 @@ function bindRowEvents(item) {
     $(item).next().find(".btnCancel").click(function () {
         $(this).parents("tr").hide();
     });
+}
+
+function stats(whiches) {
+    for (var i = 0; i < whiches.length; i++) {
+        var w = whiches[i];
+        $.ajax({
+            url: "/counts/" + w.which,
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            i: w.target,
+            success: function (params) {
+                $(this.i).text(params.count);
+
+            },
+            error: function (ex) {
+                console.log("error" + ex);
+            }
+        });
+    }
+
 }

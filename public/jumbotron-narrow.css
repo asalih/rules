@@ -91,3 +91,6 @@ body {
   .bs-active{ color: #449d44;}
   .fileContent{ display: none; }
 }
+.huge {
+    font-size: 40px;
+}

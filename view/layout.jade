@@ -4,6 +4,16 @@ html
   body
     .container
         block content
+        div#modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+         .modal-dialog
+           .modal-content
+             .modal-header
+               button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+               h4.modal-title Stats
+             .modal-body
+               .te
+             .modal-footer
+               button.btn.btn-default(type='button', data-dismiss='modal') Close
         footer.footer
-            p © rule engine
+            p © node.js rule engine
   include scripts

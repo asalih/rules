@@ -2,7 +2,6 @@ if(args.basket.totalPrice < 0.1){
     result.addError("price", "price cannot be zero or negative!");
 }
 
-
 if(args.customer.customerEmail == "xyz@abc.com" || args.customer.customerEmail == "xyza@abc.com"){
     result.addError("email", "unexpected email!");
 }

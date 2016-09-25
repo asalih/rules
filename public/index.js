@@ -52,14 +52,15 @@ $(document).ready(function () {
         interval_id = 0;
     });
 
+    
     $('.modal-link').click(function (e) {
-        var modal = $('#modal'), modalBody = $('#modal .modal-body');
+        var modal = $('#modal');
+        modal.removeData('bs.modal');
 
-        modal
-            .on('show.bs.modal', function () {
-                modalBody.load(e.currentTarget.href)
-            })
-            .modal();
+        $('#modal .modal-body').load(e.currentTarget.href)
+       
+        modal.modal();
+        
         e.preventDefault();
     });
 

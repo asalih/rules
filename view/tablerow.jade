@@ -5,7 +5,7 @@ tr.wRows
         else
             i.glyphicon.glyphicon-certificate.bs-default
     td.h3
-     a(href= "/rates/" + fl.name + "/errors" data-target="#modal").modal-link= fl.name
+     a(href= "/rates/" + fl.name data-target="#modal").modal-link= fl.name
     td.lsc(data-name= fl.name, data-state= fl.state.toString())
         .btn-group(role='group', aria-label='...')
             if fl.state

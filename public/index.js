@@ -39,12 +39,12 @@ $(document).ready(function () {
     });
 
 
-    stats([{ which: "active", target: "#activeRules" }, { which: "passive", target: "#passiveRules" }, { which: "times", target: "#timesExecuted" }]);
+    stats([{ which: "active", target: "#activeRules" }, { which: "passive", target: "#passiveRules" }, { which: "times", target: "#timesExecuted" }, { which: "elapsed", target: "#avgElapsed", def: "ms" }]);
     $(window).focus(function () {
         if (!interval_id)
             interval_id = setInterval(function () {
-                stats([{ which: "active", target: "#activeRules" }, { which: "passive", target: "#passiveRules" }, { which: "times", target: "#timesExecuted" }]);
-            }, 1000);
+                stats([{ which: "active", target: "#activeRules" }, { which: "passive", target: "#passiveRules" }, { which: "times", target: "#timesExecuted" }, { which: "elapsed", target: "#avgElapsed", def: "ms" }]);
+            }, 5000);
     });
 
     $(window).blur(function () {
@@ -251,9 +251,9 @@ function stats(whiches) {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             async: true,
-            i: w.target,
+            i: w,
             success: function (params) {
-                $(this.i).text(params.count);
+                $(this.i.target).text(params.result + (this.i.def ? " " + this.i.def : ""));
 
             },
             error: function (ex) {

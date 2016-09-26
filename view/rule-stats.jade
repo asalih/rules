@@ -1,6 +1,6 @@
 .modal-header
                button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-               h4.modal-title= "'" + name + "' STATS"
+               h4.modal-title= "'" + name + "' stats in an hour!"
 br
 .row
  .col-lg-6.col-md-6
@@ -10,7 +10,7 @@ br
         .col-xs-3
           i.fa.fa-rocket.fa-5x
         .col-xs-9.text-right
-          .huge= timesExecuted
+          .huge= res[0]
           div Times Executed!
     
         .clearfix
@@ -22,8 +22,32 @@ br
         .col-xs-3
           i.fa.fa-times.fa-5x
         .col-xs-9.text-right
-          .huge= errCount
+          .huge= res[1]
           div Error Count!
     
         .clearfix
- .te
+  .te
+ .col-lg-6.col-md-6
+  .panel.panel-warning
+    .panel-heading
+      .row
+        .col-xs-3
+          i.fa.fa-exclamation-circle.fa-5x
+        .col-xs-9.text-right
+          .huge= res[2]
+          div Warning Count!
+    
+        .clearfix
+  .te
+ .col-lg-6.col-md-6
+  .panel.panel-default
+    .panel-heading
+      .row
+        .col-xs-3
+          i.fa.fa-clock-o.fa-5x
+        .col-xs-9.text-right
+          .huge= res[3] + " ms"
+          div Avg. Response time!
+    
+        .clearfix
+  .te

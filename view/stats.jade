@@ -30,7 +30,7 @@
          i.fa.fa-arrow-circle-right
        .clearfix
 
-.col-lg-12.col-md-6
+.col-lg-6.col-md-6
  .panel.panel-info 
    .panel-heading
      .row
@@ -38,7 +38,23 @@
          i.fa.fa-rocket.fa-5x
        .col-xs-9.text-right
          .huge#timesExecuted 0
-         div Times Executed!
+         div Times Executed in an hour!
+   a(href='javascript:void(0)')
+     .panel-footer
+       span.pull-left  
+       span.pull-right
+         i.fa.fa-arrow-circle-right
+       .clearfix
+
+.col-lg-6.col-md-6
+ .panel.panel-default 
+   .panel-heading
+     .row
+       .col-xs-3
+         i.fa.fa-clock-o.fa-5x
+       .col-xs-9.text-right
+         .huge#avgElapsed 0 ms
+         div Average response time in an hour!
    a(href='javascript:void(0)')
      .panel-footer
        span.pull-left  

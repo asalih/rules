@@ -8,19 +8,32 @@ Node js rule executer.
 ### Execute rules
 
 You can post the url with json object in request body;
+
 /exec/:rule-name
 
 ![screen shot 2016-09-26 at 22 12 00](https://cloud.githubusercontent.com/assets/4123460/18848219/18c970b0-8436-11e6-85fe-1687d86c52dd.png)
 
 If you want to execute more than one rule at the same time use;
+
 /execMany/:rule-name1,rule-name2,rule-name3
 
 ![screen shot 2016-09-26 at 22 12 00](https://cloud.githubusercontent.com/assets/4123460/18848239/235b16e6-8436-11e6-8e83-406bd80d1f67.png)
 
 #### Rule Body
 In the rule body, we have 'args' object. It keeps posted json object. For example if you post;
+
+```javascript
 { "basket": { "totalPrice": 10 }, "customer": { "customerEmail": "a@b.com" } }
-You can use object like, "args.basket.totalPrice" in the rule body.
+
+//You can use object like, "args.basket.totalPrice" in the rule body.
+
+if(args.basket.totalPrice <= 0){
+  result.addError("price", "price cannot be zero");
+}
+else if(args.basket.totalPrice > 500){
+  result.addWarning("price", "big price check");
+}
+```
 
 
 

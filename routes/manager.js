@@ -67,7 +67,7 @@ app.post("/add", function (req, res) {
             res.send({ success: true, msg: "rule added!" });
         }
         else {
-            res.send({ success: false, msg: "allready has rule with name " + req.body.name });
+            res.send({ success: false, msg: "Allready has rule with name " + req.body.name });
         }
     });
 });

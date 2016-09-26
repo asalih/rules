@@ -163,6 +163,7 @@ function callSave(name, body, item, adding) {
                 }
                 else {
                     console.log(params);
+                    makeAlert("danger", params.msg);
                 }
             },
             error: function (ex) {
@@ -262,4 +263,9 @@ function stats(whiches) {
         });
     }
 
+}
+
+function makeAlert(type, text) {
+    $(".alert.alert-" + type).text(text).removeClass("hide");
+    window.setTimeout(function () { $(".alert.alert-" + type).addClass("hide"); }, 4000)
 }

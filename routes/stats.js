@@ -1,6 +1,6 @@
 module.exports = function (app) {
-    var date = Date.now() - (1000 * 60 * 60);
     app.get("/counts/:which", function (req, res) {
+        var date = Date.now() - (1000 * 60 * 60);
         switch (req.params.which) {
             case "active":
                 db.rules.count({ state: true }, function (err, count) {

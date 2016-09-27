@@ -54,7 +54,7 @@ app.post("/execMany/:which", function (req, res) {
             clearInterval(ival);
             res.send(mResult);
         }
-    }, 100);
+    }, 5);
 
 
 

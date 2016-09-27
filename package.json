@@ -1,0 +1,16 @@
+{
+    "name": "rules"
+  , "description": "Node js rule executer"
+  , "version": "0.1.0"
+  , "author": "Ahmet Salih <ahmet.c.salih@gmail.com>"
+  , "repository": {
+        "type": "git",
+        "url": "https://github.com/asalih/rules"
+    }
+    , "dependencies": {
+        "body-parser": "1.15.2",
+        "express": "4.14.0",
+        "http": "*",
+        "jade": "2.2.1"
+    }
+}

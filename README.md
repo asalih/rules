@@ -1,4 +1,4 @@
-# rules
+# rules [![Build Status](https://travis-ci.org/asalih/rules.svg?branch=master)](https://travis-ci.org/asalih/rules)
 Node js rule executer. 
 
 ![screen shot 2016-09-26 at 14 41 57](https://cloud.githubusercontent.com/assets/4123460/18833530/c039e75e-83f9-11e6-8366-41a12fd6b69f.png)

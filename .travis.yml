@@ -1,3 +1,8 @@
 language: node_js
 node_js:
   - "6"
+before_script:
+  - 'npm install -g express'
+  - 'npm install -g jade'
+  - 'npm install -g nedb'
+  - 'npm install -g body-parser'

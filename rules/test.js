@@ -1,1 +1,1 @@
-if(args.count > 15){ result.addError("count", "upper"); }
+var a = 1;if(a == 1){ result.addError("a", "1"); }

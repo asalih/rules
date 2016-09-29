@@ -6,11 +6,15 @@ var jade = require("jade");
 
 var Datastore = require("nedb");
 db = {};
-db.rules = new Datastore("ruleDb/rules.db");
-db.stats = new Datastore("ruleDb/stats.db");
+db.rules = new Datastore({filename:"ruleDb/rules.db", timestampData: true });
+db.stats = new Datastore({filename:"ruleDb/stats.db", timestampData: true });
 db.rules.loadDatabase();
 db.stats.loadDatabase();
 db.rules.persistence.setAutocompactionInterval(15000);
+
+db.stats.ensureIndex({ fieldName: 'createdAt', expireAfterSeconds: 86400 *2 }, function (err) {
+  
+});
 
 var app = express();
 
@@ -26,3 +30,5 @@ require("./routes/rules-api.js")(app);
 
 
 app.listen(8100);
+
+ 

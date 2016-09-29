@@ -63,7 +63,7 @@ app.post("/add", function (req, res) {
         if (doc == null) {
             fs.writeFileSync(rulesPath + "\\" + req.body.name + ".js", req.body.body);
 
-            db.rules.insert({ name: req.body.name, ctime: Date.now(), utime: Date.now(), state: true });
+            db.rules.insert({ name: req.body.name, state: true });
             res.send({ success: true, msg: "rule added!" });
         }
         else {
@@ -80,7 +80,7 @@ app.post("/update", function (req, res) {
         }
         else {
             fs.writeFileSync(rulesPath + "\\" + req.body.name + ".js", req.body.body);
-            db.rules.update(doc, { $set: { utime: Date.now() } });
+            db.rules.update(doc, { $set: { updatedAt: {"$$date":Date.now() } } });
             res.send({ success: true, msg: "rule updated!" });
         }
     });

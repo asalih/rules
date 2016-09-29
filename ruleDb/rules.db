@@ -1,3 +1,4 @@
-{"name":"second-rule","ctime":1470310652574,"utime":1474916076834,"state":true,"_id":"F2lhCMZbYbasBkHc"}
-{"name":"test","ctime":1474615560902,"utime":1474615560902,"state":false,"_id":"dmwk8JGc5XZC10lA"}
-{"name":"first-rule","ctime":1470310652574,"utime":1470310652574,"state":true,"_id":"l4XQwWuPPMkXvH8d"}
+{"name":"second-rule","state":true,"_id":"XCWND6t5dQGEzr8i","createdAt":{"$$date":1475138285714},"updatedAt":{"$$date":1475138285714}}
+{"name":"first-rule","state":true,"_id":"vxGbP6WocOivWeQW","createdAt":{"$$date":1475138128718},"updatedAt":{"$$date":1475138128718}}
+{"name":"test","state":true,"_id":"eQqXtSltfxcSe5ER","createdAt":{"$$date":1475141178682},"updatedAt":{"$$date":1475141178682}}
+{"name":"test","state":false,"_id":"eQqXtSltfxcSe5ER","createdAt":{"$$date":1475141178682},"updatedAt":{"$$date":1475141182356}}

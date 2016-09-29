@@ -159,6 +159,8 @@ function callSave(name, body, item, adding) {
                     $(this.props.i).parents("tr").hide();
                     if (this.props.adding) {
                         getRow(name);
+                        $("#addKey").val("");
+                        addEditor.setValue("")
                     }
                 }
                 else {

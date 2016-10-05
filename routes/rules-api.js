@@ -1,16 +1,9 @@
-var fs = require("fs");
 var restrict = require("./../restrict");
 
 module.exports = function (app) {
-    var rulesPath = __dirname + '\\..\\rules';
     app.post("/exec/:which", function (req, res) {
         db.rules.findOne({ name: req.params.which }, function (err, doc) {
             if (doc.state) {
-
-                if (!restrict.hasFunc(doc.name)) {
-                    var file = fs.readFileSync(rulesPath + "\\" + doc.name + ".js", 'utf8');
-                    restrict.addToFuncs(doc.name, file);
-                }
 
                 var result = restrict.evaluate(doc.name, req.body);
                 result.rule = doc;
@@ -33,12 +26,6 @@ module.exports = function (app) {
             db.rules.findOne({ name: rls[i] }, function (err, doc) {
                 if (doc != null) {
                     if (doc.state) {
-
-                        if (!restrict.hasFunc(doc.name)) {
-                            var file = fs.readFileSync(rulesPath + "\\" + doc.name + ".js", 'utf8');
-                            restrict.addToFuncs(doc.name, file);
-                        }
-
                         var result = restrict.evaluate(doc.name, req.body);
                         result.rule = doc;
                         db.stats.insert(result);
@@ -52,7 +39,6 @@ module.exports = function (app) {
                     }
                 }
                 else {
-
                     mResult.push({ msg: "invalid rule name." });
                 }
             });

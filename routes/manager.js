@@ -3,6 +3,15 @@ var restrict = require("./../restrict");
 
 module.exports = function (app) {
     var rulesPath = __dirname + '\\..\\rules';
+
+    function isTrustable (f) {
+        var r = new RegExp(/require(\(.*\)|(.*?))/gi);
+        if (r.test(f)) {
+            return false;
+        }
+        return true;
+    }
+    
     app.get("/", function (req, res) {
         db.rules.find({}, function (err, docs) {
             res.render("index", { rules: docs });
@@ -15,7 +24,7 @@ module.exports = function (app) {
                 res.send({ status: 404 });
             }
             else {
-                restrict.removeFunc(req.body.name);
+                restrict.removeFromCache(req.body.name);
                 db.rules.update(doc, { $set: { state: false } });
                 res.send(true);
             }
@@ -62,6 +71,11 @@ module.exports = function (app) {
     app.post("/add", function (req, res) {
         db.rules.findOne({ name: req.body.name }, function (err, doc) {
             if (doc == null) {
+                if (!isTrustable(req.body.body)) {
+                    res.send({ success: false, msg: "'require' not allowed directly!" });
+                    return;
+                }
+                 
                 fs.writeFileSync(rulesPath + "\\" + req.body.name + ".js", req.body.body);
 
                 db.rules.insert({ name: req.body.name, state: true });
@@ -80,8 +94,14 @@ module.exports = function (app) {
                 res.send({ success: false, msg: "can not find the rule with name " + req.body.name });
             }
             else {
+                 if (!isTrustable(req.body.body)) {
+                    res.send({ success: false, msg: "'require' not allowed directly!" });
+                    return;
+                }
+
                 fs.writeFileSync(rulesPath + "\\" + req.body.name + ".js", req.body.body);
-                restrict.removeFunc(req.body.name);
+
+                restrict.removeFromCache(req.body.name);
 
                 db.rules.update(doc, { $set: { updatedAt: { "$$date": Date.now() } } });
                 res.send({ success: true, msg: "rule updated!" });
@@ -94,7 +114,7 @@ module.exports = function (app) {
 
             if (num > 0) {
                 fs.renameSync(rulesPath + "\\" + req.body.name + ".js", rulesPath + "\\" + req.body.name + "_del.bak");
-                restrict.removeFunc(req.body.name);
+                restrict.removeFromCache(req.body.name);
 
                 res.send({ success: true, msg: "rule deleted!" })
             }

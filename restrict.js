@@ -1,3 +1,6 @@
+http = require("http");
+promise = require("promise")
+
 function Result() {
     this.errors = [],
         this.addError = function (key, value) {
@@ -34,40 +37,20 @@ function Result() {
 }
 
 module.exports = {
-    funcs: [],
-    addToFuncs: function (name, file) {
-        if (!this.isTrustable(file)) {
-            return { msg: "'require' not allowed directly!" };
-        }
-        var func = new Function(["args", "result"], file);
-        this.funcs[name] = { func: func, timestamp: Date.now() }
-    },
-    hasFunc: function (name) {
-        if (this.funcs[name]) {
-            return true;
-        }
-        return false;
-    },
-    removeFunc: function (name) {
-        if (this.hasFunc(name)) {
-            delete this.funcs[name];
-        }
-
-    },
-    isTrustable: function (f) {
-        var r = new RegExp(/require(\(.*\)|(.*?))/gi);
-        if (r.test(f)) {
-            return false;
-        }
-        return true;
+    removeFromCache: function (name) {
+            try{
+                delete require.cache[require.resolve("./rules/"+name)]
+            }
+            catch(e){}
     },
     evaluate: function (name, args) {
         var result = new Result();
         result.setStart();
-
+        
         try {
-            var func = this.funcs[name].func;
-            func(args, result);
+            //has cache now!
+            var func = require("./rules/"+name)
+            func.execute(args, result);
         }
         catch (e) {
             result.sys.push(e.message);

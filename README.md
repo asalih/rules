@@ -24,7 +24,9 @@ If you want to execute more than one rule at the same time with the same body th
 Modules must have **'execute'** function. When you want to execute a rule, application calls **'execute'** function with the parameters.
 
 **'execute'** function has two parameters.
+
 **'args'**: This one keeps posted json object.
+
 **'result'**: Response object.
 
 **important**: When the rule executed, last thing you have to do is call **result.send()**. In case, if you are making http request, then call the function when response got in.
@@ -69,7 +71,7 @@ module.exports = {
 }
 ```
 
-//http request example
+Http request example
 ```javascript
 module.exports = {
     execute: function (args, result) {

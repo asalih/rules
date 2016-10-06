@@ -4,5 +4,7 @@ module.exports = {
       if(a == 1){
        result.addError("a", "1"); 
       }
+
+      result.send();
 	}
 }

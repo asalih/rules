@@ -1,15 +1,15 @@
 var restrict = require("./../restrict");
+var Promise = require("promise");
 
 module.exports = function (app) {
     app.post("/exec/:which", function (req, res) {
         db.rules.findOne({ name: req.params.which }, function (err, doc) {
+            if (doc == null) {
+                res.send({ msg: 'rule not found!' });
+                return;
+            }
             if (doc.state) {
-
-                var result = restrict.evaluate(doc.name, req.body);
-                result.rule = doc;
-
-                db.stats.insert(result);
-                res.send(result);
+                var result = restrict.evaluate(doc, req.body, res);
             }
             else {
                 res.send({ msg: 'rule is disabled!' });
@@ -19,41 +19,34 @@ module.exports = function (app) {
 
     app.post("/execMany/:which", function (req, res) {
         var rls = req.params.which.split(',');
-        var mResult = [];
 
-        for (var i in rls) {
-
-            db.rules.findOne({ name: rls[i] }, function (err, doc) {
-                if (doc != null) {
+        db.rules.find({ name: { $in: rls } }, function (err, docs) {
+            mResult = [];
+            if (docs != null && docs.length > 0) {
+                var map = docs.map(function (doc) {
                     if (doc.state) {
-                        var result = restrict.evaluate(doc.name, req.body);
-                        result.rule = doc;
-                        db.stats.insert(result);
-
+                        var result = restrict.evaluate(doc, req.body, res, true);
                         mResult.push(result);
-
-
                     }
                     else {
-                        mResult.push({ msg: "rule is disabled!" });
+                        mResult.push({ done: true, msg: doc.name + " rule is disabled!" });
                     }
-                }
-                else {
-                    mResult.push({ msg: "invalid rule name." });
-                }
-            });
+                    return true;
+                });
 
-
-        }
-
-        var ival = setInterval(function () {
-            if (mResult.length >= rls.length) {
-                clearInterval(ival);
+                Promise.all(map).then(values => {
+                    var ival = setInterval(function () {
+                        if(mResult.filter(function(i){return i.done}).length == mResult.length){
+                            clearInterval(ival);
+                            res.send(mResult);
+                        }
+                    }, 3);
+                });
+            }
+            else {
+                mResult.push({ done: true, msg: "invalid rule name." });
                 res.send(mResult);
             }
-        }, 5);
-
-
-
+        });
     });
 }

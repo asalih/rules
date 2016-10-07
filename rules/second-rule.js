@@ -11,8 +11,8 @@ module.exports = {
         this.sendToApi(result);
     },
     sendToApi: function (result) {
-        http.get({
-            hostname: 'www.example.com',//some api url
+        /*https*/http.get({
+            hostname: 'www.example.net',//some api url
             port: 80,
             path: '/',
             agent: false

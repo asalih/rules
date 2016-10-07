@@ -24,8 +24,12 @@ module.exports = function (app) {
                         elapsed += docs[i].elapsed;
                     }
                     var result = elapsed / docs.length;
+                     
+                    
                     result = Math.round(result * 100);
                     result /= 100;
+
+                    
 
                     res.send({ result: result ? result : 0 });
                 });

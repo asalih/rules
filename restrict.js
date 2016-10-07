@@ -1,4 +1,5 @@
 http = require("http");
+https = require("https");
 promise = require("promise")
 
 function Result(response, doc, chain) {

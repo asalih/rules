@@ -46,7 +46,10 @@ br
         .col-xs-3
           i.fa.fa-clock-o.fa-5x
         .col-xs-9.text-right
-          .huge= res[3] + " ms"
+          if res[3] > 1000
+            .big= res[3]/1000 + " s"
+          else
+            .big= res[3] + " ms"
           div Avg. Response time!
     
         .clearfix

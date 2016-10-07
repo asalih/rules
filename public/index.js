@@ -39,11 +39,22 @@ $(document).ready(function () {
     });
 
 
-    stats([{ which: "active", target: "#activeRules" }, { which: "passive", target: "#passiveRules" }, { which: "times", target: "#timesExecuted" }, { which: "elapsed", target: "#avgElapsed", def: "ms" }]);
+    stats([{ which: "active", target: "#activeRules" },
+        { which: "passive", target: "#passiveRules" },
+        { which: "times", target: "#timesExecuted" },
+        {
+            which: "elapsed", target: "#avgElapsed",
+            def: elapsedDef
+        }]);
     $(window).focus(function () {
         if (!interval_id)
             interval_id = setInterval(function () {
-                stats([{ which: "active", target: "#activeRules" }, { which: "passive", target: "#passiveRules" }, { which: "times", target: "#timesExecuted" }, { which: "elapsed", target: "#avgElapsed", def: "ms" }]);
+                stats([{ which: "active", target: "#activeRules" },
+                    { which: "passive", target: "#passiveRules" },
+                    { which: "times", target: "#timesExecuted" },
+                    {
+                        which: "elapsed", target: "#avgElapsed", def: elapsedDef
+                    }]);
             }, 5000);
     });
 
@@ -52,20 +63,34 @@ $(document).ready(function () {
         interval_id = 0;
     });
 
-    
+
     $('.modal-link').click(function (e) {
         var modal = $('#modal');
         modal.removeData('bs.modal');
 
         $('#modal .modal-body').load(e.currentTarget.href)
-       
+
         modal.modal();
-        
+
         e.preventDefault();
     });
 
 
 });
+
+function elapsedDef(val) {
+                if (val > 1000) {
+                    if(val > 1000){
+                        val /= 100;
+                    }
+                    
+                    val = Math.round(val * 100);
+                    val /= 100;
+
+                    return val + " s";
+                }
+                return val + " ms";
+            }
 
 function getRuleBody(name, item) {
     $.ajax({
@@ -256,7 +281,7 @@ function stats(whiches) {
             async: true,
             i: w,
             success: function (params) {
-                $(this.i.target).text(params.result + (this.i.def ? " " + this.i.def : ""));
+                $(this.i.target).text(combineDef(this.i.def, params.result));
 
             },
             error: function (ex) {
@@ -265,6 +290,17 @@ function stats(whiches) {
         });
     }
 
+}
+
+function combineDef(def, val) {
+    var t = typeof (def);
+    if (t == "function") {
+        return def(val);
+    }
+    else if (t != "undefined") {
+        return val + " " + def;
+    }
+    return val;
 }
 
 function makeAlert(type, text) {
